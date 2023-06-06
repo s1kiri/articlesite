@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <header class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="{% url 'main' %}"><img src="{% static 'photo/1.png' %}"></a></li>
+        </ul>
+        <ul class="navbar-actions">
+            {% if user.is_authenticated %}
+                <li><p class="button">{{ full_name }}</p></li>
+                <li><a href="{% url 'favorites' %}" class="button">Избранные</a></li>
+                <li><a href="{% url 'publication' %}" class="button">Публикация</a></li>
+                <li><a href="{% url 'logout' %}" class="button">Выход</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="button">Логин</a></li>
+            {% endif %}
+        </ul>
+    </header>
+    <div class="content-container">
+        <h1>{{ article.title }}</h1>
+        {% if user.is_authenticated %}
+        <form method="POST">
+            {% csrf_token %}
+            {% if is_favorite %}
+                <button type="submit" name="add_favorite" style="background-color: rgb(255, 148, 148);">Удалить из избранного</button>
+            {% else %}
+                <button type="submit" name="add_favorite">Добавить в избранное</button>
+            {% endif %}
+        </form>
+        <form method="POST">
+            {% csrf_token %}
+            {% if read_s %}
+                <button type="submit" name="mark_unread">Отметить как непрочитанное</button>
+            {% else %}
+                <button type="submit" name="mark_read">Отметить как прочитанное</button>
+            {% endif %}
+        </form>
+        {% endif %}
+        <a href="{% url 'reviews' article_id=article.id %}">Отзывы</a>
+        <h3>Автор: {{ author_name }}</h3>
+        <h3>{{ article.text }}</h3>
+</body>
+</html>

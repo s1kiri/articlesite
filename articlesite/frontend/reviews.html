@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Document</title>
+</head>
+<body align="center">
+    <header class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="{% url 'main' %}"><img src="{% static 'photo/1.png' %}"></a></li>
+        </ul>
+        <ul class="navbar-actions">
+            {% if user.is_authenticated %}
+                <li><p class="button">{{ full_name }}</p></li>
+                <li><a href="{% url 'favorites' %}" class="button">Избранные</a></li>
+                <li><a href="{% url 'publication' %}" class="button">Публикация</a></li>
+                <li><a href="{% url 'logout' %}" class="button">Выход</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="button">Логин</a></li>
+            {% endif %}
+        </ul>
+    </header>
+    <h1>Отзывы на статью "{{ article.title }}"</h1>
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>{{ review.text }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>Нет отзывов</h2>
+    {% endif %}
+
+    {% if show_form %}
+        <h2>Оставить отзыв</h2>
+        <form method="POST" action="{% url 'add_review' article_id=article_id %}">
+            {% csrf_token %}
+            <textarea name="text" rows="4" cols="50" placeholder="Введите ваш отзыв"></textarea><br>
+            <button type="submit">Отправить</button>
+        </form>
+    {% else %}
+        <h2>Отзывы недоступны пока вы не прочитаете статью</h2>
+    {% endif %}
+</body>
+</html>

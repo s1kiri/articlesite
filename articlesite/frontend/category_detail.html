@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <header class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="{% url 'main' %}"><img src="{% static 'photo/1.png' %}" alt="logo"></a></li>
+        </ul>
+        <ul class="navbar-actions">
+            {% if user.is_authenticated %}
+                <li><p class="button">{{ full_name }}</p></li>
+                <li><a href="{% url 'favorites' %}" class="button">Избранные</a></li>
+                <li><a href="{% url 'publication' %}" class="button">Публикация</a></li>
+                <li><a href="{% url 'logout' %}" class="button">Выход</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="button">Логин</a></li>
+                {% endif %}
+        </ul>
+    </header>
+    <div class="content-container">
+        <h1>Статьи по категории {{ category.cat_name }}</h1>
+        <ul>
+            {% for article in articles %}
+              <li><a href="{% url 'article_detail' id=article.id %}">{{ article.title }}</a></li>
+            {% empty %}
+              <li>Нет статей в этой категории</li>
+            {% endfor %}
+          </ul>
+      </div>
+</body>
+</html>
+

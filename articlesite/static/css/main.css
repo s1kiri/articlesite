@@ -1,0 +1,89 @@
+/* Стилизация навбара */
+header.navbar {
+    background-color: #333;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header.navbar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header.navbar ul li {
+    margin-right: 20px;
+}
+
+header.navbar ul.navbar-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Стилизация логотипа */
+header.navbar ul.navbar-menu li a img {
+    max-width: 50px;
+}
+
+/* Стилизация кнопок */
+header.navbar ul.navbar-actions {
+    display: flex;
+    align-items: center;
+}
+
+header.navbar ul.navbar-actions li a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header.navbar ul.navbar-actions li a.button:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Стилизация контента */
+div.content-container {
+    margin-top: 10px;
+    padding: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+}
+
+div.content-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+p{
+    color: #fff;
+}
+/* main.css */
+
+.category-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.category-card {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.category-card:hover {
+    background-color: #e0e0e0;
+}

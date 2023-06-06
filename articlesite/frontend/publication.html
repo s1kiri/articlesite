@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Document</title>
+</head>
+<body align="center">
+    <header class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="{% url 'main' %}"><img src="{% static 'photo/1.png' %}"></a></li>
+        </ul>
+        <ul class="navbar-actions">
+            {% if user.is_authenticated %}
+                <li><p class="button">{{ full_name }}</p></li>
+                <li><a href="{% url 'favorites' %}" class="button">Избранные</a></li>
+                <li><a href="{% url 'publication' %}" class="button">Публикация</a></li>
+                <li><a href="{% url 'logout' %}" class="button">Выход</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="button">Логин</a></li>
+            {% endif %}
+        </ul>
+    </header>
+    <div class="content-container">
+    <h1>Опубликовать статью</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label for="id_title">Заголовок:</label>
+          <input type="text" name="title" id="id_title">
+        </div>
+        <div>
+          <label for="id_text">Текст:</label>
+          <textarea name="text" id="id_text"></textarea>
+        </div>
+        <div>
+          <label for="id_category">Категория:</label>
+          <select name="category" id="id_category">
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.cat_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit">Опубликовать</button>
+      </form>
+    </div>
+</body>
+</html>
